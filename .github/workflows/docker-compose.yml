@@ -1,0 +1,36 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docker-compose.yml'
+      - '.github/workflows/docker-compose.yml'
+
+jobs:
+  test-compose:
+    name: Test Docker Compose Stack
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate docker-compose file
+        run: docker-compose config
+
+      - name: Start Docker Compose services
+        run: docker-compose up -d
+
+      - name: Wait for services to be healthy
+        run: |
+          echo "Waiting for services to start..."
+          sleep 30
+
+      - name: Check service health
+        run: |
+          docker-compose ps
+          docker-compose logs
+
+      - name: Stop Docker Compose services
+        run: docker-compose down
