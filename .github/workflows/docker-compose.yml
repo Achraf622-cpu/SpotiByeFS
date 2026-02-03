@@ -2,7 +2,7 @@ name: Docker Compose CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ proj/proj-1-project-structure ]
     paths:
       - 'docker-compose.yml'
       - '.github/workflows/docker-compose.yml'

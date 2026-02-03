@@ -2,12 +2,12 @@ name: Backend CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ proj/proj-1-project-structure, develop ]
     paths:
       - 'SpotiByeBack2.1/**'
       - '.github/workflows/backend-ci.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ proj/proj-1-project-structure, develop ]
     paths:
       - 'SpotiByeBack2.1/**'
 
@@ -49,7 +49,7 @@ jobs:
     name: Build Docker Image
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/proj/proj-1-project-structure'
 
     steps:
       - name: Checkout code
