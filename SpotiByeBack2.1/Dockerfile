@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy only pom.xml first for better caching
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
+RUN mvn dependency:resolve dependency:resolve-plugins -B
 
 # Copy source code and build
 COPY src ./src
