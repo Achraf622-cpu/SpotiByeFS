@@ -22,10 +22,13 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy built files from build stage
-COPY --from=build /app/dist/SpotiBye /usr/share/nginx/html
+COPY --from=build --chown=nginx:nginx /app/dist/spoti-bye-v2.1/browser /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Set proper permissions
+RUN chmod -R 755 /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80
