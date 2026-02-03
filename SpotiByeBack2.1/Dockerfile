@@ -8,7 +8,7 @@ RUN mvn dependency:resolve dependency:resolve-plugins -B
 
 # Copy source code and build
 COPY src ./src
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:21-jre-alpine

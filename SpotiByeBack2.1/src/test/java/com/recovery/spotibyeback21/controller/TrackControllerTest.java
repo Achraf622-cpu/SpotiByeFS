@@ -41,9 +41,12 @@ class TrackControllerTest {
 
     @BeforeEach
     void setUp() {
-        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Test Album", "Rock", 180, null, null);
-        createTrackDTO = new CreateTrackDTO("Test Track", "Test Artist", "Test Album", "Rock", 180, null);
-        updateTrackDTO = new UpdateTrackDTO("Updated Track", "Updated Artist", "Updated Album", "Jazz", 200, null);
+        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Pop", "Great track", "http://example.com/audio.mp3",
+                "http://example.com/cover.jpg", 180, false, null, null);
+        createTrackDTO = new CreateTrackDTO("Test Track", "Test Artist", "Pop", "Great track",
+                "http://example.com/audio.mp3", "http://example.com/cover.jpg", 180);
+        updateTrackDTO = new UpdateTrackDTO("Updated Track", "Updated Artist", "Jazz", "Updated description",
+                "http://example.com/updated-cover.jpg", false);
     }
 
     @Test

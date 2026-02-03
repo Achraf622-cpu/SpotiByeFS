@@ -22,11 +22,13 @@ class TrackMapperTest {
         track.setId(1L);
         track.setTitle("Test Track");
         track.setArtist("Test Artist");
-        track.setAlbum("Test Album");
-        track.setGenre("Rock");
+        track.setCategory("Pop");
+        track.setDescription("Great track");
+        track.setAudioUrl("http://example.com/audio.mp3");
         track.setDuration(180);
 
-        createTrackDTO = new CreateTrackDTO("New Track", "New Artist", "New Album", "Jazz", 240, null);
+        createTrackDTO = new CreateTrackDTO("New Track", "New Artist", "Jazz", "Amazing jazz",
+                "http://example.com/new-audio.mp3", "http://example.com/cover.jpg", 240);
     }
 
     @Test
@@ -34,12 +36,12 @@ class TrackMapperTest {
         TrackDTO trackDTO = trackMapper.toDTO(track);
 
         assertThat(trackDTO).isNotNull();
-        assertThat(trackDTO.id()).isEqualTo(1L);
-        assertThat(trackDTO.title()).isEqualTo("Test Track");
-        assertThat(trackDTO.artist()).isEqualTo("Test Artist");
-        assertThat(trackDTO.album()).isEqualTo("Test Album");
-        assertThat(trackDTO.genre()).isEqualTo("Rock");
-        assertThat(trackDTO.duration()).isEqualTo(180);
+        assertThat(trackDTO.getId()).isEqualTo(1L);
+        assertThat(trackDTO.getTitle()).isEqualTo("Test Track");
+        assertThat(trackDTO.getArtist()).isEqualTo("Test Artist");
+        assertThat(trackDTO.getCategory()).isEqualTo("Pop");
+        assertThat(trackDTO.getDescription()).isEqualTo("Great track");
+        assertThat(trackDTO.getDuration()).isEqualTo(180);
     }
 
     @Test
@@ -49,8 +51,8 @@ class TrackMapperTest {
         assertThat(mappedTrack).isNotNull();
         assertThat(mappedTrack.getTitle()).isEqualTo("New Track");
         assertThat(mappedTrack.getArtist()).isEqualTo("New Artist");
-        assertThat(mappedTrack.getAlbum()).isEqualTo("New Album");
-        assertThat(mappedTrack.getGenre()).isEqualTo("Jazz");
+        assertThat(mappedTrack.getCategory()).isEqualTo("Jazz");
+        assertThat(mappedTrack.getDescription()).isEqualTo("Amazing jazz");
         assertThat(mappedTrack.getDuration()).isEqualTo(240);
     }
 
@@ -61,7 +63,7 @@ class TrackMapperTest {
         TrackDTO trackDTO = trackMapper.toDTO(emptyTrack);
 
         assertThat(trackDTO).isNotNull();
-        assertThat(trackDTO.id()).isNull();
-        assertThat(trackDTO.title()).isNull();
+        assertThat(trackDTO.getId()).isNull();
+        assertThat(trackDTO.getTitle()).isNull();
     }
 }

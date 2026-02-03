@@ -47,15 +47,19 @@ class TrackServiceTest {
         track.setId(1L);
         track.setTitle("Test Track");
         track.setArtist("Test Artist");
-        track.setAlbum("Test Album");
-        track.setGenre("Rock");
+        track.setCategory("Pop");
+        track.setDescription("Great track");
+        track.setAudioUrl("http://example.com/audio.mp3");
         track.setDuration(180);
 
-        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Test Album", "Rock", 180, null, null);
+        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Pop", "Great track", "http://example.com/audio.mp3",
+                "http://example.com/cover.jpg", 180, false, null, null);
 
-        createTrackDTO = new CreateTrackDTO("Test Track", "Test Artist", "Test Album", "Rock", 180, null);
+        createTrackDTO = new CreateTrackDTO("Test Track", "Test Artist", "Pop", "Great track",
+                "http://example.com/audio.mp3", "http://example.com/cover.jpg", 180);
 
-        updateTrackDTO = new UpdateTrackDTO("Updated Track", "Updated Artist", "Updated Album", "Jazz", 200, null);
+        updateTrackDTO = new UpdateTrackDTO("Updated Track", "Updated Artist", "Jazz", "Updated description",
+                "http://example.com/updated-cover.jpg", false);
     }
 
     @Test
@@ -66,7 +70,7 @@ class TrackServiceTest {
         List<TrackDTO> result = trackService.getAllTracks();
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).title()).isEqualTo("Test Track");
+        assertThat(result.get(0).getTitle()).isEqualTo("Test Track");
         verify(trackRepository, times(1)).findAll();
     }
 
@@ -78,7 +82,7 @@ class TrackServiceTest {
         TrackDTO result = trackService.getTrackById(1L);
 
         assertThat(result).isNotNull();
-        assertThat(result.title()).isEqualTo("Test Track");
+        assertThat(result.getTitle()).isEqualTo("Test Track");
         verify(trackRepository, times(1)).findById(1L);
     }
 
@@ -100,7 +104,7 @@ class TrackServiceTest {
         TrackDTO result = trackService.createTrack(createTrackDTO);
 
         assertThat(result).isNotNull();
-        assertThat(result.title()).isEqualTo("Test Track");
+        assertThat(result.getTitle()).isEqualTo("Test Track");
         verify(trackRepository, times(1)).save(any(Track.class));
     }
 

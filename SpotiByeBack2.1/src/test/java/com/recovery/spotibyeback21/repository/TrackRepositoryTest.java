@@ -29,15 +29,17 @@ class TrackRepositoryTest {
         track1 = new Track();
         track1.setTitle("Test Track 1");
         track1.setArtist("Test Artist 1");
-        track1.setAlbum("Test Album 1");
-        track1.setGenre("Rock");
+        track1.setCategory("Pop");
+        track1.setDescription("Great track");
+        track1.setAudioUrl("http://example.com/audio1.mp3");
         track1.setDuration(180);
 
         track2 = new Track();
         track2.setTitle("Test Track 2");
         track2.setArtist("Test Artist 2");
-        track2.setAlbum("Test Album 2");
-        track2.setGenre("Jazz");
+        track2.setCategory("Jazz");
+        track2.setDescription("Amazing jazz");
+        track2.setAudioUrl("http://example.com/audio2.mp3");
         track2.setDuration(240);
     }
 
