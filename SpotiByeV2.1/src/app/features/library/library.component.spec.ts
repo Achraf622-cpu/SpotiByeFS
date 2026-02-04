@@ -3,6 +3,7 @@ import { LibraryComponent } from './library.component';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { Track } from '../../core/models/track.model';
 import * as TrackActions from '../../store/tracks/track.actions';
+import { vi } from 'vitest';
 
 describe('LibraryComponent', () => {
     let component: LibraryComponent;
@@ -26,7 +27,9 @@ describe('LibraryComponent', () => {
         store = TestBed.inject(MockStore);
         fixture = TestBed.createComponent(LibraryComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+        // Do NOT call detectChanges here if we want to spy on ngOnInit if called automatically, 
+        // but explicit call in test requires it not to run yet or spy first.
+        // However, standard Angular runs ngOnInit on first detectChanges.
     });
 
     it('should create', () => {
@@ -34,14 +37,14 @@ describe('LibraryComponent', () => {
     });
 
     it('should dispatch loadTracks on init', () => {
-        const dispatchSpy = spyOn(store, 'dispatch');
-        component.ngOnInit();
+        const dispatchSpy = vi.spyOn(store, 'dispatch');
+        fixture.detectChanges(); // This triggers ngOnInit
         expect(dispatchSpy).toHaveBeenCalledWith(TrackActions.loadTracks());
     });
 
     it('should display tracks', () => {
         const mockTracks: Track[] = [
-            { id: 1, title: 'Track 1', artist: 'Artist 1', album: 'Album 1', genre: 'Rock', duration: 180 }
+            { id: 1, title: 'Track 1', artist: 'Artist 1', category: 'rock', description: 'Desc', duration: 180, audioUrl: 'url', isFavorite: false, dateAdded: new Date() }
         ];
 
         store.setState({
