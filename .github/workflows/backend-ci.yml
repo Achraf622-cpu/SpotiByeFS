@@ -48,10 +48,6 @@ jobs:
 
       - name: Run tests
         working-directory: ./SpotiByeBack2.1
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/spotibye
-          SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: password
         run: mvn test
 
       - name: Generate test coverage report
