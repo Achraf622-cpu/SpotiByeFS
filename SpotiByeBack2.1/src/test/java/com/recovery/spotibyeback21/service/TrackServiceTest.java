@@ -2,6 +2,7 @@ package com.recovery.spotibyeback21.service;
 
 import com.recovery.spotibyeback21.dto.CreateTrackDTO;
 import com.recovery.spotibyeback21.dto.TrackDTO;
+import com.recovery.spotibyeback21.dto.TrackDetailDTO;
 import com.recovery.spotibyeback21.dto.UpdateTrackDTO;
 import com.recovery.spotibyeback21.entity.Track;
 import com.recovery.spotibyeback21.exception.ResourceNotFoundException;
@@ -37,6 +38,7 @@ class TrackServiceTest {
     private TrackService trackService;
 
     private Track track;
+    private TrackDetailDTO trackDetailDTO;
     private TrackDTO trackDTO;
     private CreateTrackDTO createTrackDTO;
     private UpdateTrackDTO updateTrackDTO;
@@ -52,8 +54,19 @@ class TrackServiceTest {
         track.setAudioUrl("http://example.com/audio.mp3");
         track.setDuration(180);
 
-        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Pop", "Great track", "http://example.com/audio.mp3",
+        // TrackDTO without audioUrl
+        trackDTO = new TrackDTO(1L, "Test Track", "Test Artist", "Pop", "Great track",
                 "http://example.com/cover.jpg", 180, false, null, null);
+
+        // TrackDetailDTO with audioUrl
+        trackDetailDTO = new TrackDetailDTO("http://example.com/audio.mp3");
+        trackDetailDTO.setId(1L);
+        trackDetailDTO.setTitle("Test Track");
+        trackDetailDTO.setArtist("Test Artist");
+        trackDetailDTO.setCategory("Pop");
+        trackDetailDTO.setDescription("Great track");
+        trackDetailDTO.setCoverImage("http://example.com/cover.jpg");
+        trackDetailDTO.setDuration(180);
 
         createTrackDTO = new CreateTrackDTO("Test Track", "Test Artist", "Pop", "Great track",
                 "http://example.com/audio.mp3", "http://example.com/cover.jpg", 180);
@@ -77,12 +90,13 @@ class TrackServiceTest {
     @Test
     void shouldGetTrackById() {
         when(trackRepository.findById(1L)).thenReturn(Optional.of(track));
-        when(trackMapper.toDTO(track)).thenReturn(trackDTO);
+        when(trackMapper.toDetailDTO(track)).thenReturn(trackDetailDTO);
 
-        TrackDTO result = trackService.getTrackById(1L);
+        TrackDetailDTO result = trackService.getTrackById(1L);
 
         assertThat(result).isNotNull();
         assertThat(result.getTitle()).isEqualTo("Test Track");
+        assertThat(result.getAudioUrl()).isEqualTo("http://example.com/audio.mp3");
         verify(trackRepository, times(1)).findById(1L);
     }
 
@@ -99,9 +113,9 @@ class TrackServiceTest {
     void shouldCreateTrack() {
         when(trackMapper.toEntity(createTrackDTO)).thenReturn(track);
         when(trackRepository.save(any(Track.class))).thenReturn(track);
-        when(trackMapper.toDTO(track)).thenReturn(trackDTO);
+        when(trackMapper.toDetailDTO(track)).thenReturn(trackDetailDTO);
 
-        TrackDTO result = trackService.createTrack(createTrackDTO);
+        TrackDetailDTO result = trackService.createTrack(createTrackDTO);
 
         assertThat(result).isNotNull();
         assertThat(result.getTitle()).isEqualTo("Test Track");

@@ -1,3 +1,4 @@
+
 package com.recovery.spotibyeback21.dto;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ public class TrackDTO {
     private String artist;
     private String category;
     private String description;
-    private String audioUrl;
+    // audioUrl removed to TrackDetailDTO
     private String coverImage;
     private Integer duration;
     private Boolean isFavorite;

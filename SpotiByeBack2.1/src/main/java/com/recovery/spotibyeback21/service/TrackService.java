@@ -2,6 +2,7 @@ package com.recovery.spotibyeback21.service;
 
 import com.recovery.spotibyeback21.dto.CreateTrackDTO;
 import com.recovery.spotibyeback21.dto.TrackDTO;
+import com.recovery.spotibyeback21.dto.TrackDetailDTO;
 import com.recovery.spotibyeback21.dto.UpdateTrackDTO;
 import com.recovery.spotibyeback21.entity.Track;
 import com.recovery.spotibyeback21.exception.ResourceNotFoundException;
@@ -40,21 +41,23 @@ public class TrackService {
      * Get track by ID
      */
     @Transactional(readOnly = true)
-    public TrackDTO getTrackById(Long id) {
+    public TrackDetailDTO getTrackById(Long id) {
         log.info("Fetching track with ID: {}", id);
         Track track = trackRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Track not found with ID: " + id));
-        return trackMapper.toDTO(track);
+        // Return full detail for single fetch
+        return trackMapper.toDetailDTO(track);
     }
 
     /**
      * Create new track
      */
-    public TrackDTO createTrack(CreateTrackDTO createTrackDTO) {
+    public TrackDetailDTO createTrack(CreateTrackDTO createTrackDTO) {
         log.info("Creating new track: {}", createTrackDTO.getTitle());
         Track track = trackMapper.toEntity(createTrackDTO);
         Track savedTrack = trackRepository.save(track);
-        return trackMapper.toDTO(savedTrack);
+        // Return full detail so frontend can play immediately
+        return trackMapper.toDetailDTO(savedTrack);
     }
 
     /**

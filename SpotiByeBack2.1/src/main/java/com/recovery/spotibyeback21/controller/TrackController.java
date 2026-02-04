@@ -2,6 +2,7 @@ package com.recovery.spotibyeback21.controller;
 
 import com.recovery.spotibyeback21.dto.CreateTrackDTO;
 import com.recovery.spotibyeback21.dto.TrackDTO;
+import com.recovery.spotibyeback21.dto.TrackDetailDTO;
 import com.recovery.spotibyeback21.dto.UpdateTrackDTO;
 import com.recovery.spotibyeback21.service.TrackService;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/tracks")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost" })
 public class TrackController {
 
     private final TrackService trackService;
@@ -55,9 +56,9 @@ public class TrackController {
      * GET /api/tracks/{id} - Get track by ID
      */
     @GetMapping("/{id}")
-    public ResponseEntity<TrackDTO> getTrackById(@PathVariable Long id) {
+    public ResponseEntity<com.recovery.spotibyeback21.dto.TrackDetailDTO> getTrackById(@PathVariable Long id) {
         log.info("GET /api/tracks/{}", id);
-        TrackDTO track = trackService.getTrackById(id);
+        com.recovery.spotibyeback21.dto.TrackDetailDTO track = trackService.getTrackById(id);
         return ResponseEntity.ok(track);
     }
 
@@ -65,9 +66,10 @@ public class TrackController {
      * POST /api/tracks - Create new track
      */
     @PostMapping
-    public ResponseEntity<TrackDTO> createTrack(@Valid @RequestBody CreateTrackDTO createTrackDTO) {
+    public ResponseEntity<com.recovery.spotibyeback21.dto.TrackDetailDTO> createTrack(
+            @Valid @RequestBody CreateTrackDTO createTrackDTO) {
         log.info("POST /api/tracks - Creating track: {}", createTrackDTO.getTitle());
-        TrackDTO createdTrack = trackService.createTrack(createTrackDTO);
+        com.recovery.spotibyeback21.dto.TrackDetailDTO createdTrack = trackService.createTrack(createTrackDTO);
         return new ResponseEntity<>(createdTrack, HttpStatus.CREATED);
     }
 

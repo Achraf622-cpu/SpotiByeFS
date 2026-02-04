@@ -14,7 +14,7 @@ export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
 
 export const SUPPORTED_AUDIO_FORMATS = ['audio/mpeg', 'audio/wav', 'audio/ogg'];
 
-export const MAX_FILE_SIZE = 10 * 1024 * 1024;
+export const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 export const VALIDATION = {
   TITLE_MAX_LENGTH: 50,
@@ -22,7 +22,7 @@ export const VALIDATION = {
 } as const;
 
 export interface Track {
-  id: string;
+  id: number | string; // Backend sends number (Long)
 
   title: string;
 
@@ -34,9 +34,11 @@ export interface Track {
 
   duration: number;
 
-  dateAdded: Date;
+  dateAdded: Date | string; // Backend sends string (ISO date)
 
-  audioFileId: string;
+  audioFileId?: string; // Optional (not used by backend DTO)
+
+  audioUrl?: string;
 
   coverImage?: string;
 

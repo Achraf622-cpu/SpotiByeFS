@@ -304,7 +304,7 @@ export class TrackDetailComponent implements OnInit {
     this.showDeleteConfirm.set(false);
   }
 
-  formatDate(date: Date | undefined): string {
+  formatDate(date: Date | string | undefined): string {
     if (!date) return '';
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',

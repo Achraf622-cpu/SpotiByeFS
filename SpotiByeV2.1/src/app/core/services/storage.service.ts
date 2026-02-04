@@ -86,7 +86,7 @@ export class StorageService {
             const store = transaction.objectStore(TRACKS_STORE);
             const request = store.put({
                 ...track,
-                dateAdded: track.dateAdded.toISOString()
+                dateAdded: track.dateAdded instanceof Date ? track.dateAdded.toISOString() : track.dateAdded
             });
 
             request.onsuccess = () => resolve();
@@ -170,7 +170,9 @@ export class StorageService {
         });
 
         // Delete associated audio file
-        await this.deleteAudioFile(track.audioFileId);
+        if (track.audioFileId) {
+            await this.deleteAudioFile(track.audioFileId);
+        }
     }
 
     // ============ AUDIO FILE OPERATIONS ============

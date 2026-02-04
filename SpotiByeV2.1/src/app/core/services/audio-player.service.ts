@@ -131,7 +131,7 @@ export class AudioPlayerService {
         this._duration.set(track.duration);
 
         try {
-            const url = await this.trackService.getAudioUrl(track);
+            const url = track.audioUrl;
             if (!url) {
                 this._playerState.set('stopped');
                 return false;
