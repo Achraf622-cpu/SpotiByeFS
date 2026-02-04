@@ -5,31 +5,39 @@ import { AudioPlayerService } from '../../core/services/audio-player.service';
 import { Track } from '../../core/models/track.model';
 import { vi } from 'vitest';
 import { signal } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 describe('LibraryComponent', () => {
     let component: LibraryComponent;
     let fixture: ComponentFixture<LibraryComponent>;
-
-    // Mock Services with Signals
-    const mockTrackService = {
-        tracks: signal<Track[]>([]),
-        loadingState: signal('success'),
-        error: signal(null),
-        favoriteCount: signal(0),
-        toggleFavorite: vi.fn().mockReturnValue(Promise.resolve(true))
-    };
-
-    const mockPlayerService = {
-        currentTrack: signal(null),
-        isPlaying: signal(false),
-        togglePlay: vi.fn(),
-        setQueue: vi.fn()
-    };
+    let mockTrackService: any;
+    let mockPlayerService: any;
 
     beforeEach(async () => {
+        // Mock Services with Signals
+        mockTrackService = {
+            tracks: signal<Track[]>([]),
+            loadingState: signal('success'),
+            error: signal(null),
+            isLoading: signal(false),
+            trackCount: signal(0),
+            favoriteCount: signal(0),
+            toggleFavorite: vi.fn().mockReturnValue(Promise.resolve(true))
+        };
+
+        mockPlayerService = {
+            currentTrack: signal(null),
+            isPlaying: signal(false),
+            togglePlay: vi.fn(),
+            setQueue: vi.fn()
+        };
+
+        // ...
+
         await TestBed.configureTestingModule({
             imports: [LibraryComponent],
             providers: [
+                provideRouter([]),
                 { provide: TrackService, useValue: mockTrackService },
                 { provide: AudioPlayerService, useValue: mockPlayerService }
             ]
@@ -37,7 +45,13 @@ describe('LibraryComponent', () => {
 
         fixture = TestBed.createComponent(LibraryComponent);
         component = fixture.componentInstance;
+        // Inject services to access signals if needed in tests
+        // component.trackService = TestBed.inject(TrackService);
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

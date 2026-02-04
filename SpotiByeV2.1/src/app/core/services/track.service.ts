@@ -16,12 +16,13 @@ import {
     AudioFile
 } from '../models/track.model';
 import { NotificationService } from './notification.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TrackService {
-    private readonly API_URL = 'http://localhost:8080/api/tracks';
+    private readonly API_URL = `${environment.apiUrl}/tracks`;
 
     // Private signals for state
     private readonly _tracks = signal<Track[]>([]);

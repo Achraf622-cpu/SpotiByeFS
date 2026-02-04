@@ -33,6 +33,7 @@ describe('TrackService', () => {
     });
 
     afterEach(() => {
+        TestBed.resetTestingModule();
         httpMock.verify();
     });
 
@@ -107,6 +108,9 @@ describe('TrackService', () => {
         vi.spyOn(service as any, 'validateTrackInput').mockReturnValue(null);
 
         const createPromise = service.create(dto);
+
+        // Wait for async file processing to complete
+        await new Promise(resolve => setTimeout(resolve, 0));
 
         // We expect the service to call POST after internal processing
         const req = httpMock.expectOne(`${environment.apiUrl}/tracks`);
