@@ -106,7 +106,7 @@ class TrackServiceTest {
 
         assertThatThrownBy(() -> trackService.getTrackById(999L))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Track not found with id: 999");
+                .hasMessageContaining("Track not found with ID: 999");
     }
 
     @Test
@@ -152,6 +152,6 @@ class TrackServiceTest {
 
         assertThatThrownBy(() -> trackService.deleteTrack(999L))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Track not found with id: 999");
+                .hasMessageContaining("Track not found with ID: 999");
     }
 }
