@@ -26,6 +26,10 @@ describe('TrackService', () => {
         });
         service = TestBed.inject(TrackService);
         httpMock = TestBed.inject(HttpTestingController);
+
+        // Handle the initial loadTracks call in constructor
+        const req = httpMock.expectOne(`${environment.apiUrl}/tracks`);
+        req.flush([]);
     });
 
     afterEach(() => {
