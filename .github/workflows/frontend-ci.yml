@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./SpotiByeV2.1
-        run: npm test -- --run
+        run: npm test -- --watch=false
 
       - name: Build production
         working-directory: ./SpotiByeV2.1
