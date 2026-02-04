@@ -29,7 +29,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./SpotiByeV2.1
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Lint code
         working-directory: ./SpotiByeV2.1
