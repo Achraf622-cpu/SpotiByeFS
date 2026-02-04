@@ -101,9 +101,10 @@ describe('TrackService', () => {
             dateAdded: new Date()
         };
 
-        // Mock private methods to avoid real file processing
+        // Mock private methods to avoid real file processing and validation issues
         vi.spyOn(service as any, 'fileToBase64').mockResolvedValue('base64string');
         vi.spyOn(service as any, 'calculateDuration').mockResolvedValue(240);
+        vi.spyOn(service as any, 'validateTrackInput').mockReturnValue(null);
 
         const createPromise = service.create(dto);
 
