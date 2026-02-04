@@ -101,9 +101,9 @@ describe('TrackService', () => {
             dateAdded: new Date()
         };
 
-        // Since we cannot spy on private methods easily in strict TS, we assume
-        // the service will attempt to process the file and call the API.
-        // We will just mock the API call which confirms the flow reached that point.
+        // Mock private methods to avoid real file processing
+        vi.spyOn(service as any, 'fileToBase64').mockResolvedValue('base64string');
+        vi.spyOn(service as any, 'calculateDuration').mockResolvedValue(240);
 
         const createPromise = service.create(dto);
 

@@ -15,6 +15,7 @@ describe('LibraryComponent', () => {
         tracks: signal<Track[]>([]),
         loadingState: signal('success'),
         error: signal(null),
+        favoriteCount: signal(0),
         toggleFavorite: vi.fn().mockReturnValue(Promise.resolve(true))
     };
 
