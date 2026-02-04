@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./SpotiByeV2.1
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: npm test -- --run
 
       - name: Build production
         working-directory: ./SpotiByeV2.1
